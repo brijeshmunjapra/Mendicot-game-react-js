@@ -1,0 +1,414 @@
+.game-board {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(ellipse at center, #0a2a2f 0%, #1a472a 100%);
+  color: white;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-header {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: right;
+  z-index: 2;
+  animation: slideInFromRight 0.5s ease-out;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  transform-origin: top right;
+  transition: transform 0.3s ease;
+}
+
+.game-header:hover {
+  transform: scale(1.05);
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.game-header h1 {
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 5px;
+  font-size: 24px;
+  margin: 0;
+}
+
+.game-header button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+}
+
+.game-header button:hover {
+  background-color: #219a52;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.table-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glow-table-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 420px;
+  height: 260px;
+  background: radial-gradient(ellipse at center, #1a8a7a 60%, #0a2a2f 100%);
+  border-radius: 40px;
+  box-shadow: 0 0 60px 20px #1a8a7a99, 0 0 0 8px #fff2 inset;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0.95;
+}
+
+.avatar-pos {
+  position: absolute;
+  z-index: 2;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+}
+
+.avatar-pos.current-player {
+  animation: heartbeat 1.5s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.12);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.avatar-north {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.avatar-south {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.avatar-east {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.avatar-west {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.players-container {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.player-area {
+  position: absolute;
+  width: 600px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.player-area.north {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player-area.east {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: right center;
+  width: 500px;
+}
+
+.player-area.south {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player-area.west {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left center;
+  width: 500px;
+}
+
+.player-hand {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1px;
+  min-height: 120px;
+  padding: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.player-hand::-webkit-scrollbar {
+  height: 3px;
+}
+
+.player-hand::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.trick-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  width: 200px;
+  height: 200px;
+}
+
+.trick-area .card {
+  margin: 0;
+  transform: none !important;
+}
+
+/* Position cards in trick area */
+.trick-area .card:nth-child(1) { /* North */
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.trick-area .card:nth-child(2) { /* East */
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.trick-area .card:nth-child(3) { /* South */
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.trick-area .card:nth-child(4) { /* West */
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.player-score {
+  margin-top: 3px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+}
+
+.game-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  backdrop-filter: blur(5px);
+}
+
+.game-info p {
+  margin: 3px 0;
+  color: #fff;
+}
+
+.trick-cross-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+}
+.trick-card {
+  position: absolute;
+  width: 100px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 8px #0008);
+}
+.trick-north {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.trick-south {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.trick-east {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  z-index: 2;
+}
+.trick-west {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  z-index: 2;
+}
+
+.hand-fan-area {
+  position: absolute;
+  width: 100%;
+  height: 160px;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.hand-fan-area-south {
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hand-fan-area-north {
+  left: 0;
+  right: 0;
+  top: 10px;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+.hand-fan-area-east {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  width: 160px;
+  height: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hand-fan-area-west {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  width: 160px;
+  height: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hand-fan-card {
+  position: absolute;
+  bottom: 0;
+  pointer-events: auto;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.hand-fan-card:hover {
+  transform: scale(1.08) translateY(-20px) !important;
+  z-index: 100 !important;
+  box-shadow: 0 8px 24px #000a;
+}
+
+.scoreboard {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+.team-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-score .score {
+  font-size: 20px;
+  color: #27ae60;
+  margin-left: 5px;
+} 

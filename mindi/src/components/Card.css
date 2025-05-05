@@ -1,0 +1,107 @@
+.card {
+  width: 80px;
+  height: 112px;
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 2px;
+  border: 1px solid #ddd;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card.selected {
+  border: 2px solid #4CAF50;
+  transform: translateY(-3px);
+}
+
+.card.playable {
+  border: 2px solid #2196F3;
+}
+
+.card-corner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18px;
+}
+
+.card-corner.top-left {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
+.card-corner.bottom-right {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  transform: rotate(180deg);
+}
+
+.card-rank {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.card-suit {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.card-value {
+  font-size: 9px;
+  font-weight: bold;
+  color: #666;
+  margin-top: 1px;
+}
+
+.card-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.card-suit-large {
+  font-size: 32px;
+  margin-bottom: 2px;
+}
+
+.card-rank-large {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.red {
+  color: #FF0000;
+}
+
+.black {
+  color: #000000;
+}
+
+/* Add a subtle pattern to the card back */
+.card-back {
+  background: repeating-linear-gradient(
+    45deg,
+    #f0f0f0,
+    #f0f0f0 10px,
+    #e0e0e0 10px,
+    #e0e0e0 20px
+  );
+  border: 1px solid #ccc;
+} 
