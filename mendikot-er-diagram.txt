@@ -1,0 +1,43 @@
+Mendikot Game ER Diagram (PlantUML Style)
+=========================================
+
+@startuml
+entity "Game" as Game {
+  gameId : UUID
+  trumpSuit : Suit
+  trumpMethod : String
+  roundNumber : int
+}
+
+entity "Player" as Player {
+  playerId : UUID
+  name : String
+  position : String
+  score : int
+}
+
+entity "Card" as Card {
+  cardId : UUID
+  suit : Suit
+  rank : String
+  value : int
+}
+
+entity "Trick" as Trick {
+  trickId : UUID
+  winnerId : UUID
+}
+
+entity "Team" as Team {
+  teamId : UUID
+  name : String
+}
+
+Game ||--o{ Player : has
+Game ||--o{ Trick : has
+Game ||--o{ Team : has
+Player ||--o{ Card : "hand"
+Trick ||--o{ Card : "played"
+Player }o--|| Team : belongs to
+Trick }o--|| Player : "winner"
+@enduml 

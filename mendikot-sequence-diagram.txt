@@ -1,0 +1,40 @@
+Mendikot Game Sequence Diagram (PlantUML Style)
+===============================================
+
+@startuml
+actor User
+participant "GameBoard (React)" as GameBoard
+participant "GameState" as State
+participant "Player"
+participant "Deck/Utils"
+
+User -> GameBoard: Start Game
+GameBoard -> Deck/Utils: Create & Shuffle Deck
+GameBoard -> Deck/Utils: Draw for Dealer & Partnerships
+Deck/Utils -> State: Set Dealer, Partnerships
+GameBoard -> User: Show Trump Method Modal
+User -> GameBoard: Select Trump Method
+GameBoard -> Deck/Utils: Deal Cards (Batch)
+Deck/Utils -> State: Distribute Hands
+alt Trump Method = Random
+    GameBoard -> Deck/Utils: Draw Trump Card
+    Deck/Utils -> State: Set Trump Suit
+else Trump Method = Band
+    GameBoard -> Player: Player to Dealer's Right Selects Trump
+    Player -> State: Set Trump Suit
+end
+GameBoard -> User: Show Table, Hands, Avatars
+loop Each Trick
+    GameBoard -> Player: Current Player Plays Card
+    Player -> State: Remove Card from Hand
+    GameBoard -> State: Add Card to Trick
+    alt Trick Complete (4 cards)
+        GameBoard -> Deck/Utils: Determine Trick Winner
+        Deck/Utils -> State: Assign Trick to Winner
+        GameBoard -> State: Set Next Leader
+    end
+end
+GameBoard -> Deck/Utils: Calculate Scores
+Deck/Utils -> State: Update Scores
+GameBoard -> User: Show Winner Modal
+@enduml 
